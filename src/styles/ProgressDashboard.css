@@ -1,0 +1,302 @@
+/* Progress Dashboard Component Styles */
+
+.progress-dashboard {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.dashboard-header h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-sm);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(139, 111, 71, 0.05), rgba(232, 168, 124, 0.05));
+  border: 2px solid var(--color-border);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.stat-card h3 {
+  color: var(--color-primary);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: var(--spacing-sm) 0;
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+/* Activity Section */
+.activity-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.activity-section h3,
+.milestones-section h3,
+.goals-section h3,
+.encouragement-section h3 {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--spacing-sm);
+  background-color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+}
+
+.activity-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.day-label {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.activity-bar-wrapper {
+  display: flex;
+  align-items: flex-end;
+  height: 100px;
+  min-width: 35px;
+}
+
+.activity-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--color-primary), var(--color-accent));
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.activity-bar:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 -4px 8px rgba(139, 111, 71, 0.2);
+}
+
+.activity-count {
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Milestones Section */
+.milestones-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.milestone {
+  text-align: center;
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, rgba(107, 160, 92, 0.1), rgba(212, 165, 116, 0.1));
+  border: 2px solid var(--color-success);
+  border-radius: var(--radius-lg);
+}
+
+.milestone-emoji {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+.milestone p {
+  color: var(--color-success);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+/* Goals Section */
+.goals-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.goals-breakdown {
+  background-color: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.goal-progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.goal-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.goal-pct {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: var(--font-size-base);
+}
+
+.progress-bar.full-width {
+  width: 100%;
+  height: 16px;
+}
+
+.progress-fill {
+  max-width: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Encouragement Section */
+.encouragement-section {
+  background: linear-gradient(135deg, rgba(139, 111, 71, 0.08), rgba(232, 168, 124, 0.08));
+  border: 2px solid var(--color-primary);
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+.encouragement-section h3 {
+  margin-bottom: var(--spacing-md);
+}
+
+.encouragement-section p {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.encouragement-section strong {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .progress-dashboard {
+    padding: var(--spacing-md);
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .stat-card {
+    padding: var(--spacing-md);
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+
+  .activity-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    padding: var(--spacing-sm);
+  }
+
+  .activity-bar-wrapper {
+    height: 60px;
+    min-width: 25px;
+  }
+
+  .milestones-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .milestone {
+    padding: var(--spacing-sm);
+  }
+
+  .milestone-emoji {
+    font-size: 1.5rem;
+  }
+
+  .milestone p {
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .milestones-grid {
+    grid-template-columns: 1fr;
+  }
+}

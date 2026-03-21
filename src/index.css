@@ -1,0 +1,255 @@
+/* Global Styles - Feel Better App */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Warm, encouraging color palette */
+  --color-primary: #8B6F47;      /* Warm brown */
+  --color-secondary: #D4A574;    /* Light tan */
+  --color-accent: #E8A87C;       /* Peachy accent */
+  --color-success: #6BA05C;      /* Gentle green */
+  --color-danger: #C65E4A;       /* Warm red */
+  --color-bg: #FFF8F3;           /* Warm white */
+  --color-text: #3C3C3C;         /* Dark gray */
+  --color-text-light: #7A7A7A;   /* Medium gray */
+  --color-border: #E8D7C8;       /* Light border */
+  --color-hover: #E8D7C8;        /* Hover state */
+  
+  /* Typography */
+  --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Shadows & Effects */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Border radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: var(--font-size-base);
+}
+
+/* Accessibility */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for keyboard navigation */
+*:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Typography */
+h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+}
+
+h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: var(--spacing-sm);
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+p {
+  margin-bottom: var(--spacing-sm);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: #7A5E3A;
+}
+
+/* Secondary button */
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background-color: #C69463;
+}
+
+/* Success button */
+.btn-success {
+  background-color: var(--color-success);
+  color: white;
+  font-weight: 600;
+}
+
+.btn-success:hover {
+  background-color: #5A8F4D;
+}
+
+/* Danger button */
+.btn-danger {
+  background-color: var(--color-danger);
+  color: white;
+  font-weight: 600;
+}
+
+.btn-danger:hover {
+  background-color: #B34E3A;
+}
+
+/* Input fields */
+input, textarea, select {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm);
+  background-color: white;
+  color: var(--color-text);
+  transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Links */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Cards */
+.card {
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  :root {
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.75rem;
+  }
+
+  h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Dark mode support (future enhancement) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1a1515;
+    --color-text: #F0E8E0;
+    --color-text-light: #B8B0A8;
+    --color-border: #3A3530;
+    --color-hover: #3A3530;
+  }
+
+  button {
+    color: inherit;
+  }
+
+  input, textarea, select {
+    background-color: #2a2520;
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+
+  .card {
+    background-color: #2a2520;
+    border-color: var(--color-border);
+  }
+}
