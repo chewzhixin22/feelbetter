@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import GoalBuilder from './components/GoalBuilder'
 import ExerciseHub from './components/ExerciseHub'
+import FeelBetter from './components/FeelBetter'
 import ProgressDashboard from './components/ProgressDashboard'
 import './App.css'
 
@@ -16,6 +17,13 @@ export default function App() {
             <p className="tagline">Find Your Path Forward</p>
           </div>
           <nav className="main-nav">
+            <button
+              className={`nav-btn ${currentPage === 'feelbetter' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('feelbetter')}
+              aria-current={currentPage === 'feelbetter' ? 'page' : undefined}
+            >
+              💚 Feel Better
+            </button>
             <button
               className={`nav-btn ${currentPage === 'goals' ? 'active' : ''}`}
               onClick={() => setCurrentPage('goals')}
@@ -42,6 +50,7 @@ export default function App() {
       </header>
 
       <main className="app-main">
+        {currentPage === 'feelbetter' && <FeelBetter />}
         {currentPage === 'goals' && <GoalBuilder />}
         {currentPage === 'exercises' && <ExerciseHub />}
         {currentPage === 'progress' && <ProgressDashboard />}

@@ -1,5 +1,36 @@
 /* Goal Builder Component Styles */
 
+@keyframes celebrate {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.5);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
 .goal-builder {
   max-width: 900px;
   margin: 0 auto;
@@ -122,6 +153,66 @@
   background-color: white;
   border-left: 4px solid var(--color-primary);
   transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.goal-card.celebrating {
+  background: linear-gradient(135deg, rgba(107, 160, 92, 0.2), rgba(232, 168, 124, 0.2));
+  border-left-color: var(--color-success);
+  animation: bounce 0.6s ease;
+}
+
+.celebration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.95);
+  pointer-events: none;
+  z-index: 10;
+  gap: var(--spacing-md);
+}
+
+.celebration-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-success);
+  text-align: center;
+  animation: bounce 0.6s ease;
+}
+
+.confetti {
+  position: absolute;
+  font-size: 2rem;
+  animation: celebrate 2s ease-in forwards;
+  pointer-events: none;
+}
+
+.confetti:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+}
+.confetti:nth-child(2) {
+  left: 30%;
+  animation-delay: 0.2s;
+}
+.confetti:nth-child(3) {
+  left: 50%;
+  animation-delay: 0.4s;
+}
+.confetti:nth-child(4) {
+  left: 70%;
+  animation-delay: 0.6s;
+}
+.confetti:nth-child(5) {
+  left: 90%;
+  animation-delay: 0.8s;
 }
 
 .goal-card:hover {
@@ -204,6 +295,126 @@
   min-width: 40px;
 }
 
+/* Subtasks Section */
+
+.goal-subtasks {
+  width: 100%;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.subtasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.subtasks-header h4 {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.expand-btn {
+  background: none;
+  border: 2px solid var(--color-primary);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--color-primary);
+  font-weight: bold;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.expand-btn:hover {
+  background-color: var(--color-primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.subtasks-list {
+  animation: slide-in 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background-color: #FDF8F3;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background-color: white;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.subtask-item:hover {
+  background-color: #F5F0E8;
+}
+
+.subtask-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+.subtask-item span {
+  flex: 1;
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  transition: all 0.2s ease;
+}
+
+.subtask-item span.completed {
+  text-decoration: line-through;
+  color: var(--color-text-light);
+}
+
+.subtask-item input[type="checkbox"]:checked + span {
+  color: var(--color-success);
+  font-weight: 500;
+}
+
+.btn-tiny {
+  padding: 4px 8px;
+  font-size: var(--font-size-sm);
+  min-width: auto;
+  width: auto;
+}
+
+.add-subtask-form {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--spacing-sm);
+}
+
+.add-subtask-form input {
+  flex: 1;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.add-subtask-form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
 .empty-state {
   text-align: center;
   padding: var(--spacing-xl);
@@ -244,4 +455,28 @@
   .form-actions button {
     width: 100%;
   }
+
+  .subtasks-header h4 {
+    font-size: 0.75rem;
+  }
+
+  .subtasks-list {
+    padding: var(--spacing-sm);
+  }
+
+  .subtask-item {
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+  }
+
+  .add-subtask-form {
+    flex-direction: column;
+  }
+
+  .add-subtask-form input,
+  .add-subtask-form button {
+    flex: 1;
+    width: 100%;
+  }
 }
+

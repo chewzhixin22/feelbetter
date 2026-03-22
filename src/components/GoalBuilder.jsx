@@ -18,6 +18,9 @@ export default function GoalBuilder() {
   const [newGoal, setNewGoal] = useState('')
   const [selectedPrompt, setSelectedPrompt] = useState('')
   const [showForm, setShowForm] = useState(false)
+  const [expandedGoalId, setExpandedGoalId] = useState(null)
+  const [newSubtask, setNewSubtask] = useState({})
+  const [celebratingGoalId, setCelebratingGoalId] = useState(null)
 
   const addGoal = (e) => {
     e.preventDefault()
@@ -28,6 +31,7 @@ export default function GoalBuilder() {
       text: newGoal,
       createdAt: new Date().toISOString(),
       progress: 0, // 0-100
+      subtasks: [],
     }
 
     setGoals([...goals, goal])
@@ -41,9 +45,67 @@ export default function GoalBuilder() {
   }
 
   const updateGoalProgress = (id, progress) => {
+    const newProgress = Math.min(100, Math.max(0, progress))
     setGoals(
       goals.map((goal) =>
-        goal.id === id ? { ...goal, progress: Math.min(100, Math.max(0, progress)) } : goal
+        goal.id === id ? { ...goal, progress: newProgress } : goal
+      )
+    )
+    
+    // Trigger celebration if goal completed
+    if (newProgress === 100) {
+      setCelebratingGoalId(id)
+      setTimeout(() => setCelebratingGoalId(null), 3000)
+    }
+  }
+
+  const addSubtask = (goalId, subtaskText) => {
+    if (!subtaskText.trim()) return
+
+    setGoals(
+      goals.map((goal) =>
+        goal.id === goalId
+          ? {
+              ...goal,
+              subtasks: [
+                ...goal.subtasks,
+                {
+                  id: Date.now(),
+                  text: subtaskText,
+                  completed: false,
+                },
+              ],
+            }
+          : goal
+      )
+    )
+    setNewSubtask({ ...newSubtask, [goalId]: '' })
+  }
+
+  const toggleSubtaskComplete = (goalId, subtaskId) => {
+    setGoals(
+      goals.map((goal) =>
+        goal.id === goalId
+          ? {
+              ...goal,
+              subtasks: goal.subtasks.map((st) =>
+                st.id === subtaskId ? { ...st, completed: !st.completed } : st
+              ),
+            }
+          : goal
+      )
+    )
+  }
+
+  const deleteSubtask = (goalId, subtaskId) => {
+    setGoals(
+      goals.map((goal) =>
+        goal.id === goalId
+          ? {
+              ...goal,
+              subtasks: goal.subtasks.filter((st) => st.id !== subtaskId),
+            }
+          : goal
       )
     )
   }
@@ -121,62 +183,154 @@ export default function GoalBuilder() {
 
       {goals.length > 0 && (
         <div className="goals-list">
-          {goals.map((goal) => (
-            <div key={goal.id} className="goal-card card">
-              <div className="goal-content">
-                <h3>{goal.text}</h3>
-                <div className="goal-progress-wrapper">
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{ width: `${goal.progress}%` }}
-                    />
+          {goals.map((goal) => {
+            const subtaskTotal = goal.subtasks.length
+            const subtaskCompleted = goal.subtasks.filter((st) => st.completed).length
+            const isCelebrating = celebratingGoalId === goal.id
+
+            return (
+              <div key={goal.id} className={`goal-card card ${isCelebrating ? 'celebrating' : ''}`}>
+                {isCelebrating && (
+                  <div className="celebration">
+                    <div className="confetti">🎉</div>
+                    <div className="confetti">🌟</div>
+                    <div className="confetti">✨</div>
+                    <div className="confetti">💜</div>
+                    <div className="confetti">🚀</div>
+                    <div className="celebration-text">Goal Complete! You did it! 🎊</div>
                   </div>
-                  <span className="progress-text">{goal.progress}%</span>
+                )}
+
+                <div className="goal-content">
+                  <h3>{goal.text}</h3>
+                  <div className="goal-progress-wrapper">
+                    <div className="progress-bar">
+                      <div
+                        className="progress-fill"
+                        style={{ width: `${goal.progress}%` }}
+                      />
+                    </div>
+                    <span className="progress-text">{goal.progress}%</span>
+                  </div>
+                  <small className="goal-date">
+                    Started {new Date(goal.createdAt).toLocaleDateString()}
+                  </small>
+
+                  {/* Subtasks Section */}
+                  <div className="goal-subtasks">
+                    <div className="subtasks-header">
+                      <h4>Milestones & Steps ({subtaskCompleted}/{subtaskTotal})</h4>
+                      <button
+                        type="button"
+                        className="expand-btn"
+                        onClick={() =>
+                          setExpandedGoalId(expandedGoalId === goal.id ? null : goal.id)
+                        }
+                      >
+                        {expandedGoalId === goal.id ? '−' : '+'}
+                      </button>
+                    </div>
+
+                    {expandedGoalId === goal.id && (
+                      <div className="subtasks-list">
+                        {goal.subtasks.map((subtask) => (
+                          <div key={subtask.id} className="subtask-item">
+                            <input
+                              type="checkbox"
+                              checked={subtask.completed}
+                              onChange={() =>
+                                toggleSubtaskComplete(goal.id, subtask.id)
+                              }
+                              aria-label={`Mark "${subtask.text}" as ${subtask.completed ? 'incomplete' : 'complete'}`}
+                            />
+                            <span className={subtask.completed ? 'completed' : ''}>
+                              {subtask.text}
+                            </span>
+                            <button
+                              type="button"
+                              className="btn-danger btn-tiny"
+                              onClick={() => deleteSubtask(goal.id, subtask.id)}
+                              aria-label={`Delete subtask: ${subtask.text}`}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+
+                        {/* Add Subtask Form */}
+                        <div className="add-subtask-form">
+                          <input
+                            type="text"
+                            placeholder="Add a step or milestone..."
+                            value={newSubtask[goal.id] || ''}
+                            onChange={(e) =>
+                              setNewSubtask({
+                                ...newSubtask,
+                                [goal.id]: e.target.value,
+                              })
+                            }
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                addSubtask(goal.id, newSubtask[goal.id] || '')
+                              }
+                            }}
+                            maxLength={150}
+                          />
+                          <button
+                            type="button"
+                            className="btn-secondary btn-tiny"
+                            onClick={() =>
+                              addSubtask(goal.id, newSubtask[goal.id] || '')
+                            }
+                          >
+                            Add Step
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <small className="goal-date">
-                  Started {new Date(goal.createdAt).toLocaleDateString()}
-                </small>
-              </div>
-              <div className="goal-actions">
-                <div className="progress-controls">
+
+                <div className="goal-actions">
+                  <div className="progress-controls">
+                    <button
+                      type="button"
+                      className="btn-secondary btn-small"
+                      onClick={() => updateGoalProgress(goal.id, goal.progress - 10)}
+                    >
+                      −
+                    </button>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={goal.progress}
+                      onChange={(e) =>
+                        updateGoalProgress(goal.id, parseInt(e.target.value))
+                      }
+                      className="progress-slider"
+                      aria-label={`Progress for goal: ${goal.text}`}
+                    />
+                    <button
+                      type="button"
+                      className="btn-secondary btn-small"
+                      onClick={() => updateGoalProgress(goal.id, goal.progress + 10)}
+                    >
+                      +
+                    </button>
+                  </div>
                   <button
                     type="button"
-                    className="btn-secondary btn-small"
-                    onClick={() => updateGoalProgress(goal.id, goal.progress - 10)}
+                    className="btn-danger btn-small"
+                    onClick={() => deleteGoal(goal.id)}
+                    aria-label={`Delete goal: ${goal.text}`}
                   >
-                    −
-                  </button>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={goal.progress}
-                    onChange={(e) =>
-                      updateGoalProgress(goal.id, parseInt(e.target.value))
-                    }
-                    className="progress-slider"
-                    aria-label={`Progress for goal: ${goal.text}`}
-                  />
-                  <button
-                    type="button"
-                    className="btn-secondary btn-small"
-                    onClick={() => updateGoalProgress(goal.id, goal.progress + 10)}
-                  >
-                    +
+                    🗑️
                   </button>
                 </div>
-                <button
-                  type="button"
-                  className="btn-danger btn-small"
-                  onClick={() => deleteGoal(goal.id)}
-                  aria-label={`Delete goal: ${goal.text}`}
-                >
-                  🗑️
-                </button>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
 
